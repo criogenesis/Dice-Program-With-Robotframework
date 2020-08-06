@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Dice Program</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+        body {
+            margin-top:70px;
+            background:#333;
+            color:#fff;
+            
+        }
+    </style>
+
+</head>
+<body>
+    <h1 class="display-4 mb-3">Dice Program</h1>
+    <div class="d20">
+        <div class="input-group">
+            <div class="input-group-prepend">
+              <button id="button-d20" class="btn btn-primary" type="button">d20</button>
+            </div>
+            <div class="col-md-2">
+                <input id="numberOfDice-d20" type="number" class="form-control" placeholder="How many dice do you want to roll?" aria-label="" aria-describedby="basic-addon1">
+            </div>
+            <span style="font-size:24px;">+</span>
+            <div class="col-md-1">
+                <input id="modifier-d20" type="number" class="form-control" placeholder="modifier?" aria-label="" aria-describedby="basic-addon1">
+            </div>
+        </div>
+        <div id="d20Alert" style="margin-left: 68px;" class="alert alert-success mt-4 text-center col-md-2" role="alert">
+            
+        </div>
+    </div>
+    <br></br>
+    <div class="d10">
+        <div class="input-group">
+            <div class="input-group-prepend">
+              <button id="button-d10" class="btn btn-secondary" type="button">d10</button>
+            </div>
+            <div class="col-md-2">
+                <input id="numberOfDice-d10" type="number" class="form-control" placeholder="How many dice do you want to roll?" aria-label="" aria-describedby="basic-addon1">
+            </div>
+            <span style="font-size:24px;">+</span>
+            <div class="col-md-1">
+                <input id="modifier-d10" type="number" class="form-control" placeholder="modifier?" aria-label="" aria-describedby="basic-addon1">
+            </div>
+        </div>
+        <div id="d10Alert" style="margin-left: 68px;" class="alert alert-success mt-4 text-center col-md-2" role="alert">
+            
+        </div>
+    </div>
+    <br></br>
+    <div class="d8">
+        <div class="input-group">
+            <div class="input-group-prepend">
+              <button style="padding-right: 21px;" id="button-d8" class="btn btn-success" type="button">d8</button>
+            </div>
+            <div class="col-md-2">
+                <input id="numberOfDice-d8" type="number" class="form-control" placeholder="How many dice do you want to roll?" aria-label="" aria-describedby="basic-addon1">
+            </div>
+            <span style="font-size:24px;">+</span>
+            <div class="col-md-1">
+                <input id="modifier-d8" type="number" class="form-control" placeholder="modifier?" aria-label="" aria-describedby="basic-addon1">
+            </div>
+        </div>
+        <div id="d8Alert" style="margin-left: 68px;" class="alert alert-success mt-4 text-center col-md-2" role="alert">
+            
+        </div>
+    </div>
+    <br></br>
+    <div class="d6">
+        <div class="input-group">
+            <div class="input-group-prepend">
+              <button style="padding-right: 21px;" id="button-d6" class="btn btn-danger" type="button">d6</button>
+            </div>
+            <div class="col-md-2">
+                <input id="numberOfDice-d6" type="number" class="form-control" placeholder="How many dice do you want to roll?" aria-label="" aria-describedby="basic-addon1">
+            </div>
+            <span style="font-size:24px;">+</span>
+            <div class="col-md-1">
+                <input id="modifier-d6" type="number" class="form-control" placeholder="modifier?" aria-label="" aria-describedby="basic-addon1">
+            </div>
+        </div>
+        <div id="d6Alert" style="margin-left: 68px;" class="alert alert-success mt-4 text-center col-md-2" role="alert">
+            
+        </div>
+    </div>
+    <br></br>
+    <div class="d4">
+        <div class="input-group">
+            <div class="input-group-prepend">
+              <button style="padding-right: 21px;" id="button-d4" class="btn btn-warning" type="button">d4</button>
+            </div>
+            <div class="col-md-2">
+                <input id="numberOfDice-d4" type="number" class="form-control" placeholder="How many dice do you want to roll?" aria-label="" aria-describedby="basic-addon1">
+            </div>
+            <span style="font-size:24px;">+</span>
+            <div class="col-md-1">
+                <input id="modifier-d4" type="number" class="form-control" placeholder="modifier?" aria-label="" aria-describedby="basic-addon1">
+            </div>
+        </div>
+        <div id="d4Alert" style="margin-left: 68px;" class="alert alert-success mt-4 text-center col-md-2" role="alert">
+            
+        </div>
+    </div>
+    
+
+    <script>
+        document.getElementById('d20Alert').style.display = 'none';
+        document.getElementById('d10Alert').style.display = 'none';
+        document.getElementById('d8Alert').style.display = 'none';
+        document.getElementById('d6Alert').style.display = 'none';
+        document.getElementById('d4Alert').style.display = 'none';
+        
+        function diceRoll(diceNum)
+        {
+            let numDice = document.getElementById("numberOfDice-d"+diceNum).value;
+            let modifier = 0;
+            let canCrit = false;
+            let obtainedCrit = false;
+            let totalSum = 0;
+            let individualDie = "";
+
+
+            if((!document.getElementById("modifier-d"+diceNum).value==""))
+            {
+                modifier = parseInt(document.getElementById("modifier-d"+diceNum).value);
+            }
+
+            if(diceNum == 20)
+            {
+                canCrit = true;
+            }
+
+            for (i = 0; i < numDice; i++) 
+            {
+                let currentDice = (Math.ceil(Math.random() * Math.floor(diceNum)));
+                if(currentDice == 20)
+                {
+                    obtainedCrit = true;
+                }
+                totalSum = totalSum + currentDice;
+                if(i == 0)
+                {
+                    individualDie = individualDie + currentDice;
+                }
+                else
+                {
+                    individualDie = individualDie + " " + currentDice;
+                }
+            
+            }
+            let finalResult = totalSum + modifier;
+            console.log(`you rolled (${individualDie}) + ${modifier}`);
+            console.log(`total result is ${finalResult}`);
+            if(obtainedCrit)
+            {
+                document.getElementById(`d${diceNum}Alert`).innerHTML = `<strong>you rolled (${individualDie}) + ${modifier}
+                <br>
+                total result is ${finalResult}
+                <br>
+                AND YOU GOT A CRIT!!!</strong>`;
+            }
+            else
+            {
+                document.getElementById(`d${diceNum}Alert`).innerHTML = `<strong>you rolled (${individualDie}) + ${modifier}
+                <br>
+                total result is ${finalResult}</strong>`;
+            }
+            
+            if(!(document.getElementById("numberOfDice-d"+diceNum).value==""))
+            {
+                document.getElementById(`d${diceNum}Alert`).style.display = 'block';
+            }
+        }
+
+
+        document.getElementById('numberOfDice-d20').addEventListener('input', function(e)
+        {
+            if(document.getElementById('numberOfDice-d20').value=="")
+            {
+                document.getElementById('d20Alert').style.display = 'none';
+            }
+        });
+        document.getElementById('numberOfDice-d10').addEventListener('input', function(e)
+        {
+            if(document.getElementById('numberOfDice-d10').value=="")
+            {
+                document.getElementById('d10Alert').style.display = 'none';
+            }
+        });
+        document.getElementById('numberOfDice-d8').addEventListener('input', function(e)
+        {
+            if(document.getElementById('numberOfDice-d8').value=="")
+            {
+                document.getElementById('d8Alert').style.display = 'none';
+            }
+        });
+        document.getElementById('numberOfDice-d6').addEventListener('input', function(e)
+        {
+            if(document.getElementById('numberOfDice-d6').value=="")
+            {
+                document.getElementById('d6Alert').style.display = 'none';
+            }
+        });
+        document.getElementById('numberOfDice-d4').addEventListener('input', function(e)
+        {
+            if(document.getElementById('numberOfDice-d4').value=="")
+            {
+                document.getElementById('d4Alert').style.display = 'none';
+            }
+        });
+
+        document.getElementById('button-d20').addEventListener('click', function() { diceRoll(20) });
+        document.getElementById('button-d10').addEventListener('click', function() { diceRoll(10) });
+        document.getElementById('button-d8').addEventListener('click', function() { diceRoll(8) });
+        document.getElementById('button-d6').addEventListener('click', function() { diceRoll(6) });
+        document.getElementById('button-d4').addEventListener('click', function() { diceRoll(4) });
+    </script>
+</body>
+</html>
